@@ -1,0 +1,9 @@
+# Upload pengguna jangan ikut ke repo
+assets/uploads/produk/*
+assets/uploads/bukti/*
+!assets/uploads/produk/.gitkeep
+!assets/uploads/bukti/.gitkeep
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
