@@ -1,12 +1,526 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>=+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Abby Collection — Sistem Penjualan Sepatu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styleHome.css">
+</head>
 <body>
-    <h1>Selamat Datang di Toko Sepatu Bunda Dewi</h1>
-    <p>Temukan berbagai macam sepatu berkualitas untuk seluruh keluarga di toko kami. Kami menyediakan sepatu untuk pria, wanita, dan anak-anak dengan berbagai model dan ukuran.</p>
+
+  <!-- ==================== 1. HALAMAN AUTENTIKASI (LOGIN & REGISTRASI) ==================== -->
+  <section id="authView" class="auth-wrapper">
+    <div class="auth-card">
+      <div class="brand-header">
+        <h1 class="brand-title">Abby Collection</h1>
+        <p class="brand-subtitle">Minimalist Footwear Store</p>
+      </div>
+
+      <!-- Tab Switch Login / Register -->
+      <div class="auth-tabs">
+        <button type="button" class="auth-tab active" data-target="loginForm">Masuk</button>
+        <button type="button" class="auth-tab" data-target="registerForm">Registrasi</button>
+      </div>
+
+      <!-- Form Login (User & Admin) -->
+      <form id="loginForm" class="auth-form">
+        <div class="input-group">
+          <label for="loginEmail">Email</label>
+          <input type="email" id="loginEmail" placeholder="user@abby.com atau admin@abby.com" required>
+        </div>
+        <div class="input-group">
+          <label for="loginPassword">Kata Sandi</label>
+          <input type="password" id="loginPassword" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="btn-primary full-width">Masuk ke Akun</button>
+
+        <div class="demo-credentials">
+          <p><strong>Akun Demo:</strong></p>
+          <p>Pelanggan: <code>user@abby.com</code> / <code>user123</code></p>
+          <p>Admin: <code>admin@abby.com</code> / <code>admin123</code></p>
+        </div>
+      </form>
+
+      <!-- Form Registrasi Pelanggan -->
+      <form id="registerForm" class="auth-form hidden">
+        <div class="input-group">
+          <label for="regName">Nama Lengkap</label>
+          <input type="text" id="regName" placeholder="Nama lengkap Anda" required>
+        </div>
+        <div class="input-group">
+          <label for="regEmail">Email</label>
+          <input type="email" id="regEmail" placeholder="nama@email.com" required>
+        </div>
+        <div class="input-group">
+          <label for="regPhone">No. Handphone / WhatsApp</label>
+          <input type="tel" id="regPhone" placeholder="0812xxxxxxxx" required>
+        </div>
+        <div class="input-group">
+          <label for="regPassword">Kata Sandi</label>
+          <input type="password" id="regPassword" placeholder="Minimal 6 karakter" minlength="6" required>
+        </div>
+        <button type="submit" class="btn-primary full-width">Daftar Pelanggan Baru</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ==================== 2. APLIKASI VERSI PELANGGAN ==================== -->
+  <div id="customerApp" class="app-shell hidden">
+    <header class="navbar">
+      <div class="nav-container">
+        <a href="#" class="brand-logo" data-user-nav="catalog">Abby Collection</a>
+        <nav class="nav-menu">
+          <button type="button" class="nav-btn active" data-user-nav="catalog">Katalog</button>
+          <button type="button" class="nav-btn" data-user-nav="cart">
+            Keranjang (<span id="navCartCount">0</span>)
+          </button>
+          <button type="button" class="nav-btn" data-user-nav="orders">Riwayat Pesanan</button>
+          <button type="button" class="nav-btn" data-user-nav="profile">Profil & Alamat</button>
+        </nav>
+        <div class="nav-user">
+          <span id="navUserName" class="user-greeting">Halo, Pelanggan</span>
+          <button type="button" id="userLogoutBtn" class="btn-outline sm">Keluar</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-container">
+      <!-- TAB PELANGGAN 1: KATALOG, PENCARIAN & FILTER -->
+      <section id="userCatalogTab" class="user-section">
+        <div class="hero-banner">
+          <span class="hero-tag">Footwear Studio</span>
+          <h2>Temukan Langkah Terbaik Anda</h2>
+          <p>Koleksi sepatu minimalis dengan pilihan ukuran, warna, dan kualitas terkurasi.</p>
+        </div>
+
+        <!-- Bar Pencarian & Filter -->
+        <div class="filter-panel">
+          <div class="filter-grid">
+            <div class="input-group">
+              <label for="searchShoe">Cari Nama Sepatu</label>
+              <input type="text" id="searchShoe" placeholder="Ketik nama sepatu...">
+            </div>
+            <div class="input-group">
+              <label for="filterCategory">Kategori</label>
+              <select id="filterCategory">
+                <option value="">Semua Kategori</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label for="filterBrand">Merek</label>
+              <select id="filterBrand">
+                <option value="">Semua Merek</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label for="filterSize">Ukuran</label>
+              <select id="filterSize">
+                <option value="">Semua Ukuran</option>
+                <option value="37">37</option>
+                <option value="38">38</option>
+                <option value="39">39</option>
+                <option value="40">40</option>
+                <option value="41">41</option>
+                <option value="42">42</option>
+                <option value="43">43</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label for="filterColor">Warna</label>
+              <select id="filterColor">
+                <option value="">Semua Warna</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label for="filterMaxPrice">Maksimal Harga (Rp)</label>
+              <input type="number" id="filterMaxPrice" placeholder="Contoh: 500000" min="0" step="10000">
+            </div>
+          </div>
+          <div class="filter-actions">
+            <button type="button" id="resetFilterBtn" class="btn-outline sm">Reset Filter</button>
+          </div>
+        </div>
+
+        <!-- Grid Produk -->
+        <div id="customerProductGrid" class="product-grid"></div>
+      </section>
+
+      <!-- TAB PELANGGAN 2: KERANJANG & CHECKOUT -->
+      <section id="userCartTab" class="user-section hidden">
+        <div class="section-title-bar">
+          <h2>Keranjang Belanja & Checkout</h2>
+          <p>Pilih barang yang ingin dibeli, tentukan pengiriman, dan selesaikan pembayaran.</p>
+        </div>
+
+        <div class="cart-checkout-layout">
+          <!-- Daftar Item Keranjang -->
+          <div class="card-panel">
+            <h3>Daftar Barang di Keranjang</h3>
+            <div id="cartItemsContainer" class="cart-list"></div>
+          </div>
+
+          <!-- Form Checkout & Pembayaran -->
+          <div class="card-panel">
+            <h3>Detail Checkout & Pembayaran</h3>
+            <form id="checkoutForm">
+              <div class="input-group">
+                <label>Metode Pengiriman</label>
+                <div class="radio-group">
+                  <label class="radio-card">
+                    <input type="radio" name="shippingMethod" value="Diantar ke Alamat" checked>
+                    <span>Diantar ke Alamat</span>
+                  </label>
+                  <label class="radio-card">
+                    <input type="radio" name="shippingMethod" value="Ambil di Tempat">
+                    <span>Ambil di Tempat (Toko)</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Pilihan Alamat Jika Diantar -->
+              <div id="shippingAddressBox" class="input-group">
+                <label for="checkoutAddressSelect">Pilih Alamat Pengiriman</label>
+                <select id="checkoutAddressSelect"></select>
+                <small class="helper-text">Belum ada alamat? Tambahkan di menu <strong>Profil & Alamat</strong>.</small>
+              </div>
+
+              <!-- Info Lokasi Jika Ambil di Tempat -->
+              <div id="pickupLocationBox" class="info-box hidden">
+                <strong>Lokasi Pengambilan Toko:</strong>
+                <p>Abby Collection Store — Jl. Boulevard No. 45, Makassar (Buka 09.00 - 21.00)</p>
+              </div>
+
+              <div class="input-group">
+                <label>Metode Pembayaran</label>
+                <div class="radio-group">
+                  <label class="radio-card">
+                    <input type="radio" name="paymentMethod" value="Transfer Bank Manual" checked>
+                    <span>Transfer Bank Manual</span>
+                  </label>
+                  <label class="radio-card">
+                    <input type="radio" name="paymentMethod" value="QRIS">
+                    <span>QRIS Instan</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Instruksi Transfer Manual + Upload Bukti -->
+              <div id="manualTransferBox" class="payment-detail-box">
+                <p><strong>Rekening Tujuan:</strong> BCA 7890-1234-56 a.n. Abby Collection</p>
+                <div class="input-group mt-10">
+                  <label for="transferProofInput">Unggah Bukti Transfer (Gambar)</label>
+                  <input type="file" id="transferProofInput" accept="image/*">
+                </div>
+              </div>
+
+              <!-- Instruksi QRIS -->
+              <div id="qrisBox" class="payment-detail-box hidden">
+                <p><strong>Scan QRIS Abby Collection:</strong></p>
+                <div class="qris-placeholder">
+                  <span>[ QRIS CODE — ABBY COLLECTION ]</span>
+                  <small>NMID: ID1026000987654</small>
+                </div>
+              </div>
+
+              <div class="checkout-summary">
+                <div class="summary-row">
+                  <span>Barang Terpilih</span>
+                  <span id="selectedItemCount">0 item</span>
+                </div>
+                <div class="summary-row">
+                  <span>Biaya Pengiriman</span>
+                  <span id="shippingCostDisplay">Rp 15.000</span>
+                </div>
+                <div class="summary-row total">
+                  <span>Total Pembayaran</span>
+                  <span id="checkoutTotalDisplay">Rp 0</span>
+                </div>
+              </div>
+
+              <button type="submit" class="btn-primary full-width">Buat Pesanan & Bayar</button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB PELANGGAN 3: RIWAYAT PESANAN -->
+      <section id="userOrdersTab" class="user-section hidden">
+        <div class="section-title-bar">
+          <h2>Riwayat Pesanan Saya</h2>
+          <p>Pantau status pembayaran, pengiriman, dan detail setiap transaksi Anda.</p>
+        </div>
+        <div id="customerOrdersList" class="orders-list"></div>
+      </section>
+
+      <!-- TAB PELANGGAN 4: KELOLA PROFIL & ALAMAT -->
+      <section id="userProfileTab" class="user-section hidden">
+        <div class="section-title-bar">
+          <h2>Profil & Alamat Pengiriman</h2>
+          <p>Kelola informasi pribadi, keamanan kata sandi, dan daftar alamat tujuan.</p>
+        </div>
+
+        <div class="profile-layout">
+          <!-- Edit Data Diri & Password -->
+          <div class="card-panel">
+            <h3>Informasi Data Diri</h3>
+            <form id="updateProfileForm">
+              <div class="input-group">
+                <label for="profName">Nama Lengkap</label>
+                <input type="text" id="profName" required>
+              </div>
+              <div class="input-group">
+                <label for="profEmail">Email (Tidak dapat diubah)</label>
+                <input type="email" id="profEmail" disabled>
+              </div>
+              <div class="input-group">
+                <label for="profPhone">Nomor Telepon</label>
+                <input type="tel" id="profPhone" required>
+              </div>
+              <button type="submit" class="btn-primary">Simpan Perubahan Profil</button>
+            </form>
+
+            <hr class="divider">
+
+            <h3>Ubah Kata Sandi</h3>
+            <form id="updatePasswordForm">
+              <div class="input-group">
+                <label for="oldPassword">Kata Sandi Lama</label>
+                <input type="password" id="oldPassword" required>
+              </div>
+              <div class="input-group">
+                <label for="newPassword">Kata Sandi Baru</label>
+                <input type="password" id="newPassword" minlength="6" required>
+              </div>
+              <button type="submit" class="btn-outline">Perbarui Kata Sandi</button>
+            </form>
+          </div>
+
+          <!-- Kelola Alamat Pengiriman -->
+          <div class="card-panel">
+            <h3>Daftar Alamat Pengiriman</h3>
+            <form id="addressForm" class="mb-20">
+              <input type="hidden" id="editAddressId">
+              <div class="input-group">
+                <label for="addrLabel">Label Alamat (Rumah / Kantor)</label>
+                <input type="text" id="addrLabel" placeholder="Contoh: Rumah Utama" required>
+              </div>
+              <div class="input-group">
+                <label for="addrRecipient">Nama Penerima & No. HP</label>
+                <input type="text" id="addrRecipient" placeholder="Contoh: Rina (08123456789)" required>
+              </div>
+              <div class="input-group">
+                <label for="addrFull">Alamat Lengkap</label>
+                <textarea id="addrFull" rows="2" placeholder="Nama jalan, nomor rumah, kecamatan, kota" required></textarea>
+              </div>
+              <div class="btn-row">
+                <button type="submit" id="saveAddressBtn" class="btn-primary">Tambah Alamat</button>
+                <button type="button" id="cancelEditAddrBtn" class="btn-outline hidden">Batal Edit</button>
+              </div>
+            </form>
+
+            <div id="addressListContainer" class="address-list"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- ==================== 3. APLIKASI VERSI ADMIN ==================== -->
+  <div id="adminApp" class="app-shell hidden">
+    <header class="navbar admin-navbar">
+      <div class="nav-container">
+        <a href="#" class="brand-logo" data-admin-nav="products">Abby Admin</a>
+        <nav class="nav-menu">
+          <button type="button" class="nav-btn active" data-admin-nav="products">Produk & Stok</button>
+          <button type="button" class="nav-btn" data-admin-nav="master">Merek & Kategori</button>
+          <button type="button" class="nav-btn" data-admin-nav="orders">Pesanan & Pembayaran</button>
+          <button type="button" class="nav-btn" data-admin-nav="users">Data Pelanggan</button>
+        </nav>
+        <div class="nav-user">
+          <span class="user-greeting">Administrator</span>
+          <button type="button" id="adminLogoutBtn" class="btn-outline sm">Keluar</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-container">
+      <!-- TAB ADMIN 1: KELOLA PRODUK & STOK VARIASI -->
+      <section id="adminProductsTab" class="admin-section">
+        <div class="section-title-bar">
+          <h2>Kelola Data Produk & Stok Sepatu</h2>
+          <p>Tambah, ubah, hapus sepatu serta kelola variasi ukuran, warna, dan ketersediaan stok.</p>
+        </div>
+
+        <!-- Form Tambah / Edit Produk -->
+        <div class="card-panel mb-24">
+          <h3 id="productFormTitle">Tambah Produk Sepatu Baru</h3>
+          <form id="adminProductForm">
+            <input type="hidden" id="editProductId">
+            <div class="form-grid-3">
+              <div class="input-group">
+                <label for="prodName">Nama Sepatu</label>
+                <input type="text" id="prodName" placeholder="Contoh: Abby Suede Loafer" required>
+              </div>
+              <div class="input-group">
+                <label for="prodBrand">Merek</label>
+                <select id="prodBrand" required></select>
+              </div>
+              <div class="input-group">
+                <label for="prodCategory">Kategori</label>
+                <select id="prodCategory" required></select>
+              </div>
+              <div class="input-group">
+                <label for="prodPrice">Harga (Rp)</label>
+                <input type="number" id="prodPrice" placeholder="350000" min="1000" required>
+              </div>
+              <div class="input-group">
+                <label for="prodImageFile">Foto Produk</label>
+                <input type="file" id="prodImageFile" accept="image/*">
+              </div>
+              <div class="input-group">
+                <label for="prodDesc">Deskripsi Singkat</label>
+                <input type="text" id="prodDesc" placeholder="Material kulit sintetis premium..." required>
+              </div>
+            </div>
+            <div class="btn-row">
+              <button type="submit" id="saveProductBtn" class="btn-primary">Simpan Produk</button>
+              <button type="button" id="cancelEditProdBtn" class="btn-outline hidden">Batal Edit</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Daftar Produk Admin -->
+        <div class="card-panel">
+          <h3>Daftar Produk & Manajemen Stok Variasi</h3>
+          <div id="adminProductList" class="admin-product-list"></div>
+        </div>
+      </section>
+
+      <!-- TAB ADMIN 2: KELOLA MEREK & KATEGORI -->
+      <section id="adminMasterTab" class="admin-section hidden">
+        <div class="section-title-bar">
+          <h2>Kelola Merek & Kategori</h2>
+          <p>Atur daftar merek dan kategori sepatu yang tersedia di toko.</p>
+        </div>
+
+        <div class="two-col-grid">
+          <!-- Kelola Merek -->
+          <div class="card-panel">
+            <h3>Daftar Merek</h3>
+            <form id="brandForm" class="inline-form mb-16">
+              <input type="hidden" id="editBrandIndex">
+              <input type="text" id="brandNameInput" placeholder="Nama merek baru..." required>
+              <button type="submit" id="saveBrandBtn" class="btn-primary">Simpan</button>
+            </form>
+            <ul id="brandList" class="master-list"></ul>
+          </div>
+
+          <!-- Kelola Kategori -->
+          <div class="card-panel">
+            <h3>Daftar Kategori</h3>
+            <form id="categoryForm" class="inline-form mb-16">
+              <input type="hidden" id="editCategoryIndex">
+              <input type="text" id="categoryNameInput" placeholder="Nama kategori baru..." required>
+              <button type="submit" id="saveCategoryBtn" class="btn-primary">Simpan</button>
+            </form>
+            <ul id="categoryList" class="master-list"></ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB ADMIN 3: KELOLA PESANAN & PEMBAYARAN -->
+      <section id="adminOrdersTab" class="admin-section hidden">
+        <div class="section-title-bar">
+          <h2>Kelola Pesanan & Konfirmasi Pembayaran</h2>
+          <p>Periksa bukti transfer pelanggan, konfirmasi pembayaran, dan perbarui status pengiriman.</p>
+        </div>
+        <div id="adminOrdersList" class="orders-list"></div>
+      </section>
+
+      <!-- TAB ADMIN 4: KELOLA PENGGUNA (PELANGGAN) -->
+      <section id="adminUsersTab" class="admin-section hidden">
+        <div class="section-title-bar">
+          <h2>Daftar Akun Pelanggan</h2>
+          <p>Lihat daftar pelanggan terdaftar beserta detail kontak dan alamat pengiriman mereka.</p>
+        </div>
+        <div id="adminUsersList" class="users-grid"></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- ==================== MODAL DETAIL PRODUK (PELANGGAN) ==================== -->
+  <div id="productDetailModal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <button type="button" id="closeDetailModal" class="modal-close">&times;</button>
+      <div class="modal-body-grid">
+        <div class="modal-img-box">
+          <img id="modalShoeImg" src="" alt="Detail Sepatu">
+        </div>
+        <div class="modal-info-box">
+          <span id="modalShoeMeta" class="badge-meta">Kategori • Merek</span>
+          <h3 id="modalShoeName">Nama Sepatu</h3>
+          <p id="modalShoePrice" class="modal-price">Rp 0</p>
+          <p id="modalShoeDesc" class="modal-desc">Deskripsi produk</p>
+
+          <div class="input-group">
+            <label for="modalSelectColor">Pilih Warna</label>
+            <select id="modalSelectColor"></select>
+          </div>
+
+          <div class="input-group">
+            <label for="modalSelectSize">Pilih Ukuran</label>
+            <select id="modalSelectSize"></select>
+          </div>
+
+          <p id="modalStockInfo" class="stock-indicator">Tersedia: 0 pasang</p>
+
+          <div class="input-group">
+            <label for="modalQty">Jumlah Beli</label>
+            <input type="number" id="modalQty" value="1" min="1">
+          </div>
+
+          <button type="button" id="modalAddToCartBtn" class="btn-primary full-width">+ Masukkan ke Keranjang</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL KELOLA STOK VARIASI (ADMIN) ==================== -->
+  <div id="stockModal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <button type="button" id="closeStockModal" class="modal-close">&times;</button>
+      <h3 id="stockModalTitle">Kelola Stok & Variasi</h3>
+      <p class="subtitle-sm mb-16">Tambahkan kombinasi warna, ukuran, dan jumlah stok sepatu.</p>
+
+      <form id="addVariantForm" class="form-grid-3 mb-20">
+        <input type="hidden" id="stockProductId">
+        <div class="input-group">
+          <label for="varColor">Warna</label>
+          <input type="text" id="varColor" placeholder="Contoh: Espresso" required>
+        </div>
+        <div class="input-group">
+          <label for="varSize">Ukuran</label>
+          <input type="number" id="varSize" placeholder="40" min="35" max="46" required>
+        </div>
+        <div class="input-group">
+          <label for="varStock">Jumlah Stok</label>
+          <input type="number" id="varStock" placeholder="10" min="0" required>
+        </div>
+        <div class="full-span">
+          <button type="submit" class="btn-primary sm">+ Tambah / Update Variasi</button>
+        </div>
+      </form>
+
+      <div id="variantListContainer" class="variant-table-wrap"></div>
+    </div>
+  </div>
+
+  <!-- Toast Notifikasi -->
+  <div id="toast" class="toast"></div>
+
+  <script src="scriptHome.js"></script>
 </body>
 </html>
