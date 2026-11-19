@@ -7,7 +7,7 @@ define('DB_PASS', '');
 
 // Alamat folder proyek dari root server, tanpa slash di akhir.
 // Contoh XAMPP: htdocs/abby-collection -> '/abby-collection'. Jika di root domain, isi ''.
-define('BASE_URL', 'http://localhost/abby-collection/');
+define('BASE_URL', 'http://localhost/abby-collection');
 
 define('NAMA_TOKO', 'Abby Collection');
 define('REKENING_TOKO', 'BRI 1234-5678-9012 a.n. Abby Collection'); // ganti dengan rekening asli

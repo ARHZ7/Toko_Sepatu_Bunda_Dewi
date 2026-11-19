@@ -12,8 +12,8 @@ $judul = isset($judul) ? $judul . ' | ' . NAMA_TOKO : NAMA_TOKO . ' - Sepatu pil
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="<?= url('assets/css/style.css') ?>">
-<script src="<?= url('assets/js/main.js') ?>" defer></script>
+<link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/style.css">
+<script src="<?= BASE_URL ?>/assets/js/main.js"></script>
 </head>
 <body>
 <header class="site-header">
